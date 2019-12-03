@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     
     private void showRecyclerList() {
         rvLaptop.setLayoutManager(new LinearLayoutManager(this));
-        LaptopAdapter laptopAdapter = new LaptopAdapter(list);
+        LaptopAdapter laptopAdapter = new LaptopAdapter(getApplicationContext(), list);
         rvLaptop.setAdapter(laptopAdapter);
     }
 

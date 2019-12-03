@@ -22,10 +22,9 @@ public class DetailActivity extends AppCompatActivity {
         final TextView tvOverview = (TextView) findViewById(R.id.tv_laptop_overview);
 
         Intent i = getIntent();
-        Bundle b = i.getExtras();
-        String name = b.getString("bName");
-        String detail = b.getString("bDetail");
-        String photo = b.getString("bPhoto");
+        String name = i.getStringExtra("i_name");
+        String detail = i.getStringExtra("i_detail");
+        int photo = i.getIntExtra("i_photo", 0);
 
         collapsingToolbarLayout.setTitle(name);
         tvName.setText(name);

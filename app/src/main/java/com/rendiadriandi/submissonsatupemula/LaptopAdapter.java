@@ -1,5 +1,7 @@
 package com.rendiadriandi.submissonsatupemula;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +18,11 @@ import java.util.ArrayList;
 
 public class LaptopAdapter extends RecyclerView.Adapter<LaptopAdapter.ListViewHolder> {
 
+    Context context;
     private ArrayList<Laptop> listLaptop;
 
-    public LaptopAdapter(ArrayList<Laptop> list){
+    public LaptopAdapter(Context c, ArrayList<Laptop> list){
+        this.context = c;
         this.listLaptop = list;
     }
 
@@ -31,13 +35,33 @@ public class LaptopAdapter extends RecyclerView.Adapter<LaptopAdapter.ListViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        Laptop laptop = listLaptop.get(position);
+        final Laptop laptop = listLaptop.get(position);
+        final String name, detail;
+        final int photo;
+
+        name = laptop.getName();
+        detail = laptop.getDetail();
+        photo = laptop.getPhoto();
+
         Glide.with(holder.itemView.getContext())
-                .load(laptop.getPhoto())
+                .load(photo)
                 .apply(new RequestOptions().override(55,55))
                 .into(holder.imgPhoto);
-        holder.tvName.setText(laptop.getName());
-        holder.tvDetail.setText(laptop.getDetail());
+        holder.tvName.setText(name);
+        holder.tvDetail.setText(detail);
+
+        //unutk klik
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, DetailActivity.class);
+                i.putExtra("i_photo", photo);
+                i.putExtra("i_name", name);
+                i.putExtra("i_detail", detail);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override
